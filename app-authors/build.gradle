@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+    id "io.freefair.lombok" version "6.6.1"
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+ext{
+    mainClass="com.distribuida.Server"
+}
+
+dependencies {
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation 'io.quarkus:quarkus-hibernate-orm-rest-data-panache'
+    implementation 'io.quarkus:quarkus-resteasy-jackson'
+    implementation 'io.quarkus:quarkus-arc'
+    implementation 'io.quarkus:quarkus-resteasy'
+    implementation  'io.quarkus:quarkus-jdbc-postgresql'
+    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.rest-assured:rest-assured'
+    implementation 'io.quarkus:quarkus-flyway'
+}
+
+group 'com.distribuida'
+version '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+test {
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
+}
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+task copyLibs(type: Copy) {
+    from configurations.runtimeClasspath
+    into 'build/libs/libs'
+}
+jar {
+    archiveFileName = "${project.name}.jar"
+    manifest {
+        attributes ('Main-Class': "${project.mainClass}" ,
+                'Class-Path': configurations.runtimeClasspath.files.collect { "libs/$it.name" }.join(' ')
+        )
+    }
+}

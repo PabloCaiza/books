@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'application'
+    id "io.freefair.lombok" version "6.4.3"
+
+}
+
+group 'com.programacion'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'com.sparkjava:spark-core:2.9.3'
+    implementation 'org.jboss.weld.se:weld-se-core:5.0.0.SP1'
+    implementation 'org.slf4j:slf4j-simple:1.7.21'
+    implementation 'com.sparkjava:spark-template-thymeleaf:2.7.1'
+    implementation 'org.thymeleaf:thymeleaf:3.0.15.RELEASE'
+    implementation group: 'org.jboss.resteasy', name: 'resteasy-client', version: '6.1.0.Final'
+    implementation 'org.jboss.resteasy:resteasy-jackson2-provider:6.2.2.Final'
+
+
+}
+ext{
+    mainClass="com.programacion.Application"
+}
+sourceSets {
+    main{
+        output.resourcesDir=file("${buildDir}/classes/java/main")
+    }
+
+}
+task copyLibs(type: Copy) {
+    from configurations.runtimeClasspath
+    into 'build/libs/libs'
+}
+jar {
+    archiveFileName = "${project.name}.jar"
+    manifest {
+        attributes ('Main-Class': "${project.mainClass}" ,
+                'Class-Path': configurations.runtimeClasspath.files.collect { "libs/$it.name" }.join(' ')
+        )
+    }
+}

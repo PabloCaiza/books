@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+<br/>
+<a class="btn btn-outline-success" href="/addAuthor">Add Author</a>
+<a class="btn btn-outline-secondary" href="/books">Books</a>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+    </tr>
+
+    </thead>
+    <tbody>
+
+    <tr th:each="a:${authors}">
+        <td th:text="${a.id}"></td>
+        <td th:text="${a.first_name}"></td>
+        <td th:text="${a.last_name}"></td>
+        <td >
+            <a type="button" class="btn btn-outline-primary" th:href="'/updateAuthor/'+${a.id}">Edit</a>
+        </td>
+        <td>
+            <a type="button" class="btn btn-outline-danger" th:href="'/deleteAuthor/'+${a.id}">Delete</a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

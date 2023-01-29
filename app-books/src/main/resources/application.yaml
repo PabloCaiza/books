@@ -1,0 +1,11 @@
+db:
+  source: jdbc
+  connection:
+    url: "jdbc:postgresql://localhost:5432/books"
+    username: "postgres"
+    password: "postgres"
+    poolName: hikariPool
+server:
+  port: 6060
+
+
