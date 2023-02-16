@@ -22,7 +22,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   app-authors:
-    image: pjcaiza/app-authors:1.0
+    image: pjcaiza/app-authors:1.0.0
     environment:
       QUARKUS_DATASOURCE_USERNAME: postgres
       QUARKUS_DATASOURCE_JDBC_PASSWORD: postgres
@@ -42,15 +42,15 @@ services:
       - "traefik.http.middlewares.app-authors-stripprefix.stripprefix.prefixes=/app-authors"
       - "traefik.http.routers.app-authors.middlewares=app-authors-stripprefix"
   app-books:
-    image: pjcaiza/app-books:1.0
+    image: pjcaiza/app-books:1.0.0
     ports:
       - 6060
     deploy:
       replicas: 3
     environment:
-      DB_CONNECTION_URL: jdbc:postgresql://postgres-sql/books
-      DB_CONNECTION_USERNAME: postgres
-      DB_CONNECTION_PASSWORD: postgres
+      DB_URL: jdbc:postgresql://postgres-sql/books
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
     depends_on:
       traefik:
         condition: service_started
@@ -61,7 +61,7 @@ services:
       - "traefik.http.middlewares.app-books-stripprefix.stripprefix.prefixes=/app-books"
       - "traefik.http.routers.app-books.middlewares=app-books-stripprefix"
   app-web:
-    image: pjcaiza/app-web:1.0 
+    image: pjcaiza/app-web:1.0.0
     ports:
       - 8080:8080
     depends_on:

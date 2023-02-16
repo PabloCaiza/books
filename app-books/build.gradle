@@ -12,26 +12,28 @@ repositories {
 ext {
     helidonversion = '3.0.2'
     mainClass='io.helidon.microprofile.cdi.Main'
+
 }
 dependencies {
     implementation platform("io.helidon:helidon-dependencies:${project.helidonversion}")
     implementation 'io.helidon.microprofile.server:helidon-microprofile-server'
     implementation 'org.glassfish.jersey.media:jersey-media-json-binding'
-
     runtimeOnly 'org.jboss:jandex'
     // lombok con gradle sin plugin
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
-
     testCompileOnly 'org.projectlombok:lombok:1.18.24'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
-    //
-    implementation 'io.helidon.dbclient:helidon-dbclient'
-    implementation 'io.helidon.dbclient:helidon-dbclient-jdbc'
-
-    implementation 'com.zaxxer:HikariCP:5.0.1'
+    //open api
+    implementation 'io.helidon.microprofile.openapi:helidon-microprofile-openapi:3.1.2'
+    //database
     implementation 'org.postgresql:postgresql:42.5.1'
-    implementation group: 'org.flywaydb', name: 'flyway-core', version: '9.12.0'
+    implementation 'org.hibernate.orm:hibernate-core:6.1.7.Final'
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
+
+
+
+
 }
 flyway {
     url = 'jdbc:postgresql://localhost:5432/books'

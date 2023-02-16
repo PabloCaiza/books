@@ -7,12 +7,11 @@ import java.util.concurrent.ExecutionException;
 
 public interface BookService {
 
-    List<Book> getBooks() throws ExecutionException, InterruptedException;
-    Book getBookById(Integer id) throws ExecutionException, InterruptedException;
-    void creteBook(Book book) throws ExecutionException, InterruptedException;
-    void updateBook(Integer id,Book book) throws ExecutionException, InterruptedException;
-    void delete(Integer id) throws ExecutionException, InterruptedException;
-
-    void deleteBookByAuthor(Integer authorId) throws ExecutionException, InterruptedException;
+    List<Book> getBooks();
+    Book getBookById(Integer id);
+    void creteBook(Book book);
+    void updateBook(Integer id,Book book);
+    void delete(Integer id);
+    List<Book> getBookByAuthor(Integer authorId);
 
 }
