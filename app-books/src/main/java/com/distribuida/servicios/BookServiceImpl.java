@@ -39,7 +39,7 @@ public class BookServiceImpl implements BookService {
         savedBook.setIsbn(book.getIsbn());
         savedBook.setTitle(book.getTitle());
         savedBook.setPrice(book.getPrice());
-        entityManager.merge(savedBook);
+        entityManager.persist(savedBook);
         entityManager.getTransaction().commit();
 
 
