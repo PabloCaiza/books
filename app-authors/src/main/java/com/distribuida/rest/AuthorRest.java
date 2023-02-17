@@ -27,34 +27,38 @@ public class AuthorRest {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary = "Find Author by id")
-    @APIResponse(responseCode = "200", description = "author founded", content =
+    @Operation(summary = "GET AUTHOR")
+    @APIResponse(responseCode = "200", description = "AUTOR ENCONTRADO", content =
     @Content(mediaType = "application/json", schema = @Schema(implementation = Author.class)))
-    @APIResponse(responseCode = "400", description = "author not founded")
-    public Author findById(@Parameter(description = "id of the author", required = true) @PathParam("id") Long id) {
+    @APIResponse(responseCode = "400", description = "AUTOR NO ENCOTRADO")
+    public Author findById(@Parameter(description = "ID DEL AUTOR", required = true) @PathParam("id") Long id) {
         return authorService.getAuthorById(id);
     }
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary = "Get Authors")
-    @APIResponse(responseCode = "200", description = "all authors", content =
+    @Operation(summary = "GET AUTHORS")
+    @APIResponse(responseCode = "200", description = "OBTENER AUTORES", content =
     @Content(mediaType = "application/json", schema = @Schema(allOf = Author.class)))
     public List<Author> findAll () {
         return authorService.getAuthors();
     }
     @DELETE
     @Path("/{id}")
-    public Response delete (@PathParam("id") Long id){
+    @Operation(summary = "DELETE AUTHOR")
+    @APIResponse(responseCode = "204",description = "ELIMINAR AUTOR")
+    public Response delete (
+            @Parameter(description = "ID DEL AUTOR",required = true)
+            @PathParam("id") Long id){
         authorService.delete(id);
         return Response.status((Response.Status.NO_CONTENT) ).build();
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Operation(description = "create author")
-    @APIResponse(responseCode = "201", description = "author created")
-    @APIResponse(responseCode = "500", description = "problem with creating author")
+    @Operation(description = "CREATE AUTHOR")
+    @APIResponse(responseCode = "201", description = "CREAR AUTOR")
+    @APIResponse(responseCode = "500", description = "PROBLEMA PARA CREAR AUTORES")
     public Response create(
-            @RequestBody(description = "Created author object", required = true,
+            @RequestBody(description = "AUTOR QUE SERA CREADO", required = true,
                     content = @Content(schema = @Schema(implementation = Author.class)))
             Author a)  {
         authorService.createAuthor(a);
@@ -62,14 +66,14 @@ public class AuthorRest {
     }
     @PUT @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Operation(description = "update author with specific id")
-    @APIResponse(responseCode = "200", description = "author updated")
-    @APIResponse(responseCode = "500", description = "problem with updating author")
+    @Operation(description = "UPDATE AUTHOR")
+    @APIResponse(responseCode = "200", description = "ACTUALIZAR AUTOR")
+    @APIResponse(responseCode = "500", description = "PROBLEMA ACTUALIZAR AUTORES")
     public Response update (
-            @RequestBody(description = "Updated book object", required = true,
+            @RequestBody(description = "AUTOR AL SER ACTUALIZADO", required = true,
                     content = @Content(schema = @Schema(implementation = Author.class)))
             Author a,
-            @Parameter(description = "id of the book", required = true)
+            @Parameter(description = "ID DEL AUTOR", required = true)
             @PathParam("id") Long id){
         authorService.updateAuthor(id,a);
         return Response.status((Response.Status.OK) ).build();

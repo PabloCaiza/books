@@ -2,15 +2,16 @@ package com.distribuida.servicios;
 
 import com.distribuida.db.Book;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
 
 @ApplicationScoped
 public class BookServiceImpl implements BookService {
-    @Inject
+    @PersistenceContext(unitName = "jpa")
     private EntityManager entityManager;
 
     @Override
@@ -27,10 +28,9 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public void creteBook(Book book) {
-        entityManager.getTransaction().begin();
         entityManager.persist(book);
-        entityManager.getTransaction().commit();
     }
 
     @Override
@@ -45,17 +45,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional(Transactional.TxType.REQUIRED)
     public void delete(Integer id) {
-        entityManager.getTransaction().begin();
         entityManager.remove(getBookById(id));
-        entityManager.getTransaction().commit();
-
     }
 
-    @Override
-    public List<Book> getBookByAuthor(Integer authorId){
-        return entityManager.createNamedQuery("Book.findByAuthor",Book.class).setParameter("authorId",authorId)
-                .getResultList();
-
-    }
 }

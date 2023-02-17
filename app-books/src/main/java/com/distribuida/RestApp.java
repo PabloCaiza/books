@@ -12,10 +12,9 @@ import org.eclipse.microprofile.openapi.annotations.info.License;
 @OpenAPIDefinition(info = @Info(
         title = "app-book",
         version = "1.0.0",
-        license = @License(name = "Apache 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0.html"),
         contact = @Contact(
-                name = "example",
-                email = "example@uce.edu.ec"
+                name = "dani",
+                email = "dani@uce.edu.ec"
         )
 
 ))
